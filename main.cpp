@@ -4,7 +4,6 @@
 #include <fcntl.h>
 #include <cstdlib>
 
-
 bool gameOver;
 const int width = 20;
 const int height = 10;
@@ -13,7 +12,7 @@ int x, y;
 int fruitX, fruitY;
 int score;
 
-const int maxTail = 100;
+constexpr int maxTail = 100;
 int tailX[maxTail], tailY[maxTail];
 int nTail;
 
@@ -103,6 +102,7 @@ void Input() {
                         case 'B': if (dir != UP) dir = DOWN; break;
                         case 'C': if (dir != LEFT) dir = RIGHT; break;
                         case 'D': if (dir != RIGHT) dir = LEFT; break;
+                        default: break;
                     }
                 }
             }
@@ -113,6 +113,7 @@ void Input() {
                 case 'w': if (dir != DOWN) dir = UP; break;
                 case 's': if (dir != UP) dir = DOWN; break;
                 case 'x': gameOver = true; break;
+                default: break;
             }
         }
     }
@@ -121,7 +122,6 @@ void Input() {
 void Logic() {
     int prevX = tailX[0];
     int prevY = tailY[0];
-    int prev2X, prev2Y;
     tailX[0] = x;
     tailY[0] = y;
 
@@ -151,8 +151,8 @@ void Logic() {
     }
 
     for (int i = 1; i < nTail; i++) {
-        prev2X = tailX[i];
-        prev2Y = tailY[i];
+        int prev2X = tailX[i];
+        int prev2Y = tailY[i];
         tailX[i] = prevX;
         tailY[i] = prevY;
         prevX = prev2X;
