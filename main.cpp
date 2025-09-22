@@ -76,7 +76,7 @@ void Draw() {
                 }
                 if (!printTail) {
                     if (j == fruitX && i == fruitY) {
-                        std::cout << "F";
+                        std::cout << "@";
                     } else std::cout << " ";
                 }
             }
@@ -94,16 +94,26 @@ void Draw() {
 void Input() {
     char buf = 0;
     if (read(STDIN_FILENO, &buf, 1) > 0) {
-        switch (buf) {
-            case 'a': if (dir != RIGHT) dir = LEFT;
-                break;
-            case 'd': if (dir != LEFT) dir = RIGHT;
-                break;
-            case 'w': if (dir != DOWN) dir = UP;
-                break;
-            case 's': if (dir != UP) dir = DOWN;
-                break;
-            case 'x': gameOver = true; break;
+        if (buf == '\033') {
+            char seq[2];
+            if (read(STDIN_FILENO, &seq[0], 1) > 0 && read(STDIN_FILENO, &seq[1], 1) > 0) {
+                if (seq[0] == '[') {
+                    switch (seq[1]) {
+                        case 'A': if (dir != DOWN) dir = UP; break;
+                        case 'B': if (dir != UP) dir = DOWN; break;
+                        case 'C': if (dir != LEFT) dir = RIGHT; break;
+                        case 'D': if (dir != RIGHT) dir = LEFT; break;
+                    }
+                }
+            }
+        } else {
+            switch (buf) {
+                case 'a': if (dir != RIGHT) dir = LEFT; break;
+                case 'd': if (dir != LEFT) dir = RIGHT; break;
+                case 'w': if (dir != DOWN) dir = UP; break;
+                case 's': if (dir != UP) dir = DOWN; break;
+                case 'x': gameOver = true; break;
+            }
         }
     }
 }
