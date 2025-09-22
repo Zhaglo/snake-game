@@ -57,7 +57,13 @@ void Draw() {
             if (j == 0) std::cout << "#";
 
             if (j == x && i == y) {
-                std::cout << "O";
+                switch (dir) {
+                    case LEFT: std::cout << "<"; break;
+                    case RIGHT: std::cout << ">"; break;
+                    case UP: std::cout << "^"; break;
+                    case DOWN: std::cout << "V"; break;
+                    default: std::cout << "S"; break;
+                }
             }
             else {
                 bool printTail = false;
@@ -148,7 +154,7 @@ int main() {
         Draw();
         Input();
         Logic();
-        usleep(10);
+        usleep(100000);
     }
 
     disableRawMode();
