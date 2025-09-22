@@ -95,10 +95,14 @@ void Input() {
     char buf = 0;
     if (read(STDIN_FILENO, &buf, 1) > 0) {
         switch (buf) {
-            case 'a': dir = LEFT; break;
-            case 'd': dir = RIGHT; break;
-            case 'w': dir = UP; break;
-            case 's': dir = DOWN; break;
+            case 'a': if (dir != RIGHT) dir = LEFT;
+                break;
+            case 'd': if (dir != LEFT) dir = RIGHT;
+                break;
+            case 'w': if (dir != DOWN) dir = UP;
+                break;
+            case 's': if (dir != UP) dir = DOWN;
+                break;
             case 'x': gameOver = true; break;
         }
     }
@@ -129,7 +133,7 @@ void Logic() {
     }
 
     if (x == fruitX && y == fruitY) {
-        score += 10;
+        score += 1;
         nTail++;
 
         fruitX = rand() % width;
